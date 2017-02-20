@@ -24,6 +24,7 @@
 
 # RocksDB Ignore
 db/
+build/
 
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml
