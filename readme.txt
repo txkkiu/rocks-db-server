@@ -1,7 +1,7 @@
 ROCKS DB SERVER
 
 Download:
-	git clone
+	git clone https://github.com/koek67/rocks-db-server
 
 Install:
 	./gradlew build
