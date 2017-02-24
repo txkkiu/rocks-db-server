@@ -13,8 +13,13 @@ public class RocksDBBuilder {
 
     private Options options;
     private String path;
+    private static boolean ROCKS_LIBRARY_LOADED = false;
 
     public RocksDBBuilder() {
+        if (!ROCKS_LIBRARY_LOADED) {
+            RocksDB.loadLibrary();
+            ROCKS_LIBRARY_LOADED = true;
+        }
         options = new Options().setCreateIfMissing(true);
     }
 

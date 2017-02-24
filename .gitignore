@@ -23,7 +23,7 @@
 .idea/**/libraries
 
 # RocksDB Ignore
-db/
+rocks_databases/
 build/
 
 # Mongo Explorer plugin:
