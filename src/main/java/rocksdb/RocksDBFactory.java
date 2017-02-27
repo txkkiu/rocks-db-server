@@ -8,10 +8,10 @@ import java.util.HashMap;
 public class RocksDBFactory {
 
     private static HashMap<String, SimpleRocksDB> dbFlyWeight = new HashMap<>();
-
+    private static RocksDBBuilder builder = new RocksDBBuilder();
+    
     public static SimpleRocksDB getDB(String databaseName) {
-        dbFlyWeight.computeIfAbsent(databaseName, k -> new RocksDBBuilder().withPath("rocks_databases/" + databaseName).build());
-        return dbFlyWeight.get(databaseName);
+        return dbFlyWeight.computeIfAbsent(databaseName, k -> builder.withPath("rocks_databases/" + k).build());
     }
 
 }

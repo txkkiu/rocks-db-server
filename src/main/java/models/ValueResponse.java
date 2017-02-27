@@ -5,17 +5,13 @@ import java.util.Optional;
 /**
  * Created by koushikkrishnan on 2/21/17.
  */
-public class ValueResponse {
+public class ValueResponse extends Response {
 
     private String value = "";
-    private boolean success;
 
     public ValueResponse(Optional<String> optionalValue) {
-        optionalValue.ifPresent(x -> {
-            value = x;
-        });
+        super(optionalValue.isPresent() && optionalValue.get().length() > 0);
         value = optionalValue.orElse("");
-        success = this.value.length() > 0;
     }
 
     public String getValue() {
@@ -24,14 +20,6 @@ public class ValueResponse {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public boolean getSuccess(){
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
 }

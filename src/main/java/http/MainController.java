@@ -1,38 +1,28 @@
 package http;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import models.ModelUtils;
+import models.Response;
 import models.ValueResponse;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import rocksdb.RocksDBBuilder;
 import rocksdb.RocksDBFactory;
 import rocksdb.SimpleRocksDB;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Optional;
+@Controller
+public class MainController extends RocksDBFactory {
 
-@RestController
-public class MainController {
-
-    private ObjectMapper mapper = new ObjectMapper();
-
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(name = "/get_key", method = RequestMethod.GET)
     public String get(@RequestParam("db") String db, @RequestParam("key") String key) {
         SimpleRocksDB rocksDB = RocksDBFactory.getDB(db);
-        ValueResponse value = new ValueResponse(rocksDB.get(key));
-        StringWriter stringWriter = new StringWriter();
-        try {
-            mapper.writeValue(stringWriter, value);
-        } catch (IOException e) {
-            e.printStackTrace();
-            stringWriter.write("{\"success\": false}");
-        }
-        return stringWriter.toString();
+        ValueResponse valueResponse = new ValueResponse(rocksDB.get(key));
+        return ModelUtils.write(valueResponse);
     }
 
-    @RequestMapping(value = "/set", method = RequestMethod.POST)
+    @RequestMapping(name = "/set_key", method = RequestMethod.POST)
     public String set(@RequestParam("db") String db, @RequestParam("key") String key, @RequestParam("value") String value) {
-        return "{\"success\": " + RocksDBFactory.getDB(db).set(key, value) + "}";
+        SimpleRocksDB rocksDB = RocksDBFactory.getDB(db);
+        Response response = new Response(rocksDB.set(key, value));
+        return ModelUtils.write(response);
     }
-    
+
 }
