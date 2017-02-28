@@ -21,9 +21,9 @@ repositories {
     mavenCentral()
 }
 
-//if (!hasProperty('mainClass')) {
-//    ext.mainClass = 'http.Application'
-//}
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'http.Application'
+}
 
 springBoot {
     mainClass = "http.Application"
