@@ -1,5 +1,6 @@
 package http;
 
+import models.ListResponse;
 import models.ModelUtils;
 import models.Response;
 import models.ValueResponse;
@@ -21,6 +22,13 @@ public class MainController {
     public String set(@RequestParam("db") String db, @RequestParam("key") String key, @RequestParam("value") String value) {
         SimpleRocksDB rocksDB = RocksDBFactory.getDB(db);
         Response response = new Response(rocksDB.set(key, value));
+        return ModelUtils.write(response);
+    }
+
+    @RequestMapping(value = "/keys", method = RequestMethod.POST)
+    public String getKeySet(@RequestParam("db") String db) {
+        SimpleRocksDB rocksDB = RocksDBFactory.getDB(db);
+        ListResponse response = new ListResponse(rocksDB.getKeySet());
         return ModelUtils.write(response);
     }
 

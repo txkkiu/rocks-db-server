@@ -2,7 +2,10 @@ package rocksdb;
 
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
+import org.rocksdb.RocksIterator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,5 +37,14 @@ public class SimpleRocksDB {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<String> getKeySet() {
+        List<String> result = new ArrayList<>();
+        RocksIterator iterator = this.db.newIterator();
+        for (iterator.seekToFirst(); iterator.isValid(); iterator.next()) {
+            result.add(new String(iterator.key()));
+        }
+        return result;
     }
 }
