@@ -47,4 +47,13 @@ public class SimpleRocksDB {
         }
         return result;
     }
+
+    public void delete(String key) {
+        try {
+            this.db.remove(key.getBytes());
+        } catch (RocksDBException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

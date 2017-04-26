@@ -32,4 +32,11 @@ public class MainController {
         return ModelUtils.write(response);
     }
 
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String delete(@RequestParam("key") String key, @RequestParam("db") String db) {
+        SimpleRocksDB rocksDB = RocksDBFactory.getDB(db);
+        Response response = new Response(true);
+        return ModelUtils.write(response);
+    }
+
 }
